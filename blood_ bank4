@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Blood Stock Inventory</title>
+</head>
+<body>
+    <h1>Current Blood Stock</h1>
+
+    <form th:action="@{/stock/search}" method="GET">
+        <input type="text" name="group" placeholder="Search by Blood Group" th:value="${searchQuery}">
+        <button type="submit">Search</button>
+    </form>
+    
+    <hr>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Blood Group</th>
+                <th>Units Available</th>
+                <th>Expiry Date</th>
+                <th>Blood Bank</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="unit : ${stockList}">
+                <td th:text="${unit.bloodGroup}">O+</td>
+                <td th:text="${unit.quantityUnits}">10</td>
+                <td th:text="${unit.expiryDate}">2025-01-01</td>
+                <td th:text="${unit.bloodBankName}">Central BB</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
