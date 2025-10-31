@@ -1,0 +1,41 @@
+
+package com.bbms.controller;
+
+import com.bbms.model.BloodStock;
+import com.bbms.repository.BloodStockRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+@Controller
+public class BloodStockController {
+
+    @Autowired
+    private BloodStockRepository bloodStockRepository;
+
+    // 1. Display all blood stock
+    @GetMapping("/stock")
+    public String listBloodStock(Model model) {
+        model.addAttribute("stockList", bloodStockRepository.findAll());
+        return "stock_list"; // Returns the Thymeleaf template named stock_list.html
+    }
+
+    // 2. Handle a search request
+    @GetMapping("/stock/search")
+    public String searchStock(@RequestParam("group") String bloodGroup, Model model) {
+        List<BloodStock> results = bloodStockRepository.findByBloodGroup(bloodGroup);
+        model.addAttribute("stockList", results);
+        model.addAttribute("searchQuery", bloodGroup);
+        return "stock_list";
+    }
+
+    // 3. Add a new blood unit (example of a POST request)
+    @PostMapping("/stock/add")
+    public String addBloodUnit(BloodStock bloodUnit) {
+        bloodStockRepository.save(bloodUnit);
+        return "redirect:/stock"; // Redirect back to the stock list page
+    }
+}
