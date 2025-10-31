@@ -1,0 +1,15 @@
+
+package com.bbms.repository;
+
+import com.bbms.model.BloodStock;
+import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.List;
+
+public interface BloodStockRepository extends JpaRepository<BloodStock, Long> {
+
+    // Custom method to find blood units by group
+    List<BloodStock> findByBloodGroup(String bloodGroup);
+
+    // Custom method to find blood units below a certain quantity
+    List<BloodStock> findByQuantityUnitsLessThan(int quantity);
+}
