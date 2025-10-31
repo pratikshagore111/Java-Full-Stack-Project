@@ -1,4 +1,4 @@
-// src/main/java/com/bbms/model/BloodStock.java
+
 package com.bbms.model;
 
 import jakarta.persistence.Entity;
